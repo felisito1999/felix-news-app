@@ -27,7 +27,7 @@ class ArticleDisplay extends Component {
 
     let config = {
       method: "get",
-      url: `/api/GetArticles?pageNumber=${this.state.pageCount}&pageSize=${this.state.pageSize}`,
+      url: `https://newsappapi20200817171221.azurewebsites.net/api/GetArticles?pageNumber=${this.state.pageCount}&pageSize=${this.state.pageSize}`,
       headers: {},
       data: data
     };
@@ -62,7 +62,7 @@ class ArticleDisplay extends Component {
   async getArticlesByTitle(title) {
     let config = {
       method: "get",
-      url: `/api/Articles/GetArticlesByTitle?title=${title}&pageNumber=${this.state.pageCount}&pageSize=${this.state.pageSize}`,
+      url: `https://newsappapi20200817171221.azurewebsites.net/api/Articles/GetArticlesByTitle?title=${title}&pageNumber=${this.state.pageCount}&pageSize=${this.state.pageSize}`,
       headers: {},
     };
 
@@ -174,7 +174,7 @@ class ArticleDisplay extends Component {
         {this.state.loading ? (
           <h4 className="text-center bg-secondary rounded p-5">Loading...</h4>
         ) : (
-          <div>
+          <div className="pb-5">
             {this.state.notFound ? (
               <h4 className="text-center bg-secondary rounded p-5">
                 No article was found for this criteria
@@ -207,9 +207,7 @@ class ArticleDisplay extends Component {
                         </Link>
                       </Card.Body>
                       <Card.Footer>
-                        <ul>
-                          {article.Categories.map((category, item) => (<li key={item}><Link to={`/articles/byCategories/${category.CategoryId}`}>{category.Name}</Link></li>))}
-                        </ul>
+                          {article.Categories.map((category, item) => (<Link key={item} className="nav-link text-light" to={`/articles/byCategories/${category.CategoryId}`}>{category.Name}</Link>))}
                       </Card.Footer>
                     </Card>
                   </div>

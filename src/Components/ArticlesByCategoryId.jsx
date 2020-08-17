@@ -16,22 +16,43 @@ class ArticleDisplayByCategory extends Component {
       pageSize: 6,
       pageCount: 1,
       totalPages: 0,
+      categoryName: "",
     };
 
     this.getArticlesByCategory = this.getArticlesByCategory.bind(this);
-    this.getArticlesByCategoryAndTitle = this.getArticlesByCategoryAndTitle.bind(this);
+    this.getArticlesByCategoryAndTitle = this.getArticlesByCategoryAndTitle.bind(
+      this
+    );
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.handleShowMore = this.handleShowMore.bind(this);
+    this.getCategory = this.getCategory.bind(this);
   }
 
   componentDidMount() {
     this.getArticlesByCategory();
+    this.getCategory(this.state.categoryId);
+  }
+
+  async getCategory(id) {
+    let config = {
+      method: "get",
+      url: `https://newsappapi20200817171221.azurewebsites.net/api/Category/${id}`,
+      headers: {},
+    };
+    await axios(config)
+      .then((response) => {
+        console.log(response.data);
+        this.setState({ categoryName: response.data.Name });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   async getArticlesByCategory() {
     let config = {
       method: "get",
-      url: `/api/Articles/GetAllArticlesByCategory?categoryId=${this.state.categoryId}&pageNumber=${this.state.pageCount}&pageSize=${this.state.pageSize}`,
+      url: `https://newsappapi20200817171221.azurewebsites.net/api/Articles/GetAllArticlesByCategory?categoryId=${this.state.categoryId}&pageNumber=${this.state.pageCount}&pageSize=${this.state.pageSize}`,
       headers: {},
     };
 
@@ -64,7 +85,7 @@ class ArticleDisplayByCategory extends Component {
   async getArticlesByCategoryAndTitle(title) {
     let config = {
       method: "get",
-      url: `/api/Articles/GetAllArticlesByCategoryAndTitle?categoryId=3&title=${title}&pageNumber=${this.state.pageCount}&pageSize=${this.state.pageSize}`,
+      url: `https://newsappapi20200817171221.azurewebsites.net/api/Articles/GetAllArticlesByCategoryAndTitle?categoryId=${this.state.categoryId}&title=${title}&pageNumber=${this.state.pageCount}&pageSize=${this.state.pageSize}`,
       headers: {},
     };
 
@@ -149,7 +170,9 @@ class ArticleDisplayByCategory extends Component {
   render() {
     return (
       <div>
-        <h1 className="text-center text-light">Here are the latest updates</h1>
+        <h1 className="text-center text-light">
+          Here are the latest updates for: {this.state.categoryName}
+        </h1>
         <hr className="bg-light" />
         <label className="text-light font-weight-bold mr-2" htmlFor="search">
           Search for a title:
@@ -199,17 +222,15 @@ class ArticleDisplayByCategory extends Component {
                         </Link>
                       </Card.Body>
                       <Card.Footer>
-                        <ul>
-                          {article.Categories.map((category, item) => (
-                            <li key={item}>
-                              <Link
-                                to={`/articles/byCategories/${category.CategoryId}`}
-                              >
-                                {category.Name}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
+                        {article.Categories.map((category, item) => (
+                          <Link
+                            key={item}
+                            className="nav-link text-light"
+                            to={`/articles/byCategories/${category.CategoryId}`}
+                          >
+                            {category.Name}
+                          </Link>
+                        ))}
                       </Card.Footer>
                     </Card>
                   </div>

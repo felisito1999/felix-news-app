@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import {Redirect} from "react-router-dom"
+import { Redirect } from "react-router-dom";
+import MaskedInput from "react-text-mask";
 import axios from "axios";
 
 class RegistationForm extends Component {
@@ -15,7 +16,7 @@ class RegistationForm extends Component {
       email: "",
       password: "",
       confirmPassword: "",
-      roleId: ""
+      roleId: "",
     };
     this.handleEmailAddressChange = this.handleEmailAddressChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
@@ -25,8 +26,12 @@ class RegistationForm extends Component {
     this.handleRegistrationSubmit = this.handleRegistrationSubmit.bind(this);
     this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
     this.handleLastNameChange = this.handleLastNameChange.bind(this);
-    this.handleTelephoneNumberChange = this.handleTelephoneNumberChange.bind(this);
-    this.handleCellphoneNumberChange = this.handleCellphoneNumberChange.bind(this);
+    this.handleTelephoneNumberChange = this.handleTelephoneNumberChange.bind(
+      this
+    );
+    this.handleCellphoneNumberChange = this.handleCellphoneNumberChange.bind(
+      this
+    );
   }
   componentDidMount() {
     const emailField = document.getElementById("email-address");
@@ -46,16 +51,16 @@ class RegistationForm extends Component {
     this.setState({ confirmPassword: event.target.value });
   }
   handleFirstNameChange(event) {
-    this.setState({firstName : event.target.value})
+    this.setState({ firstName: event.target.value });
   }
   handleLastNameChange(event) {
-    this.setState({lastName : event.target.value})
+    this.setState({ lastName: event.target.value });
   }
-  handleTelephoneNumberChange(event) { 
-    this.setState({telephoneNumber : event.target.value})
+  handleTelephoneNumberChange(event) {
+    this.setState({ telephoneNumber: event.target.value });
   }
   handleCellphoneNumberChange(event) {
-    this.setState({cellphoneNumber : event.target.value})
+    this.setState({ cellphoneNumber: event.target.value });
   }
   // handleUsernameChange(){
   //   this.setState({userInformation.username})
@@ -72,7 +77,7 @@ class RegistationForm extends Component {
 
       let config = {
         method: "post",
-        url: "/api/Account/Register",
+        url: "https://newsappapi20200817171221.azurewebsites.net/api/Account/Register",
         headers: {
           "Content-Type": "application/json",
         },
@@ -86,7 +91,7 @@ class RegistationForm extends Component {
           let dataRegisterTwo = JSON.stringify({
             UserId: response.data.userId,
             Username: this.state.email,
-            Password: this.state.password,
+            Password: response.data.newPassword,
             FirstName: this.state.firstName,
             LastName: this.state.lastName,
             Email: this.state.email,
@@ -104,22 +109,21 @@ class RegistationForm extends Component {
           axios(configRegisterTwo)
             .then((response) => {
               console.log(JSON.stringify(response.data));
-              if(response.data.usernameAlreadyExists === false){
-                alert(response.data.message)
-                return <Redirect to={"/login"}/>
-              }
-              else {
-                alert("Username already exists")
+              if (response.data.usernameAlreadyExists === false) {
+                alert(response.data.message);
+                return <Redirect to={"/login"} />;
+              } else {
+                alert("Username already exists");
               }
             })
             .catch((error) => {
               console.log(error);
-              alert("The user colud not be registered")
+              alert("The user colud not be registered");
             });
         })
         .catch((error) => {
           console.log(error);
-          alert("The user could not be registered")
+          alert("The user could not be registered");
         });
     } else {
       alert("The passwords dont match");
@@ -177,7 +181,7 @@ class RegistationForm extends Component {
                   id="password"
                   name="password"
                   placeholder="Enter your password"
-                  minLength="5"
+                  minLength="6"
                   maxLength="20"
                   onChange={this.handlePasswordChange}
                   required
@@ -193,7 +197,7 @@ class RegistationForm extends Component {
                   id="confirm-password"
                   name="confirm-password"
                   placeholder="Confirm your password"
-                  minLength="5"
+                  minLength="6"
                   maxLength="20"
                   onChange={this.handleConfirmPasswordChange}
                   required
@@ -235,7 +239,32 @@ class RegistationForm extends Component {
                 <label className="text-light" htmlFor="telephone-number">
                   Telephone number
                 </label>
-                <input
+                <MaskedInput
+                  mask={[
+                    "(",
+                    /[1-9]/,
+                    /[0-9]/,
+                    /[0-9]/,
+                    ")",
+                    "-",
+                    /[0-9]/,
+                    /[0-9]/,
+                    /[0-9]/,
+                    "-",
+                    /[0-9]/,
+                    /[0-9]/,
+                    /[0-9]/,
+                    /[0-9]/,
+                  ]}
+                  className="form-control"
+                  placeholder="(809)-000-0000"
+                  minLength="14"
+                  required
+                  id="my-input-id"
+                  onBlur={() => {}}
+                  onChange={this.handleTelephoneNumberChange}
+                />
+                {/* <input
                   type="tel"
                   className="form-control"
                   id="telephone-number"
@@ -246,13 +275,38 @@ class RegistationForm extends Component {
                   // pattern="([0-9]{3})-[0-9]{3}-[0-9]{4}"
                   onChange={this.handleTelephoneNumberChange}
                   required
-                />
+                /> */}
               </div>
               <div className="form-group">
                 <label className="text-light" htmlFor="cellphone-number">
                   Cellphone number
                 </label>
-                <input
+                <MaskedInput
+                  mask={[
+                    "1",
+                    "(",
+                    /[1-9]/,
+                    /[0-9]/,
+                    /[0-9]/,
+                    ")",
+                    "-",
+                    /[0-9]/,
+                    /[0-9]/,
+                    /[0-9]/,
+                    "-",
+                    /[0-9]/,
+                    /[0-9]/,
+                    /[0-9]/,
+                    /[0-9]/,
+                  ]}
+                  minLength="14"
+                  className="form-control"
+                  placeholder="1(809)-000-0000"
+                  id="my-input-id"
+                  onBlur={() => {}}
+                  onChange={this.handleCellphoneNumberChange}
+                />
+                {/* <input
                   type="tel"
                   name="cellphone-number"
                   id="cellphone-number"
@@ -262,7 +316,7 @@ class RegistationForm extends Component {
                   className="form-control"
                   // pattern="1([0-9]{3})-[0-9]{3}-[0-9]{4}"
                   onChange={this.handleCellphoneNumberChange}
-                />
+                /> */}
               </div>
               {/* <div className="form-group">
                 <label className="text-light" htmlFor="user-type">

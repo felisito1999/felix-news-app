@@ -64,7 +64,7 @@ class Login extends Component {
     );
     let config = {
       method: "post",
-      url: "/Token",
+      url: "https://newsappapi20200817171221.azurewebsites.net/Token",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
@@ -77,8 +77,8 @@ class Login extends Component {
         localStorage.setItem("userName", response.data.userName);
         localStorage.setItem("isUserLoggedIn", true);
         this.handleSuccessfulLogin();
-        this.props.history.push("/");
-        // {<Redirect to={"/"}/>}
+        window.location.reload(false);
+        // this.props.history.push("/");
       })
       .catch((error) => {
         console.log(error);
