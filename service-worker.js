@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/felix-news-app/precache-manifest.060f97b6d97ac1524543f2981378e4dc.js"
+  "/felix-news-app/precache-manifest.9b2b46144204d8ef671548dd546d6d03.js"
 );
 
 self.addEventListener('message', (event) => {
