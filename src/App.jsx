@@ -58,7 +58,7 @@ class App extends Component {
             <Switch>
               <Route
                 exact
-                path={"/"}
+                path={"/felix-news-app/"}
                 render={(props) => (
                   <ArticleDisplay
                     {...props}

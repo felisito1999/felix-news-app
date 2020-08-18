@@ -25,7 +25,7 @@ class NavigationBar extends Component {
     localStorage.clear();
     this.props.handleUserLoggedOut();
     this.setState({ isUserLoggedIn: false });
-    this.props.history.push("/");
+    this.props.history.push("/felix-news-app/");
   }
   async loadCategories() {
     let data = {};
@@ -53,7 +53,7 @@ class NavigationBar extends Component {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto">
-              <Link className="nav-link" to="/">
+              <Link className="nav-link" to="/felix-news-app/">
                 Home
               </Link>
               <Link className="nav-link" to={"/articleAdd"}>
