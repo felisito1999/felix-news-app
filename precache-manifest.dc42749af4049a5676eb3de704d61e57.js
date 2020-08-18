@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "aee13f1735859f320ff57fce4eb73fd4",
+    "revision": "d7defa5b2c0bd4461348538c9274427c",
     "url": "/felix-news-app/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/felix-news-app/static/css/2.06c478a6.chunk.css"
   },
   {
-    "revision": "df21658071acae84fdb3",
+    "revision": "e370712ec4c24bfa4e8b",
     "url": "/felix-news-app/static/css/main.5ecd60fb.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/felix-news-app/static/js/2.b6991342.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "df21658071acae84fdb3",
-    "url": "/felix-news-app/static/js/main.13701638.chunk.js"
+    "revision": "e370712ec4c24bfa4e8b",
+    "url": "/felix-news-app/static/js/main.4af64b3f.chunk.js"
   },
   {
     "revision": "ace1727692cf47531e3a",
